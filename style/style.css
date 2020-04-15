@@ -1,7 +1,7 @@
-#body {
+#received_data {
     border-collapse: collapse;
     border-spacing: 0;
-    width: 90%;
+    margin:30px;
     border: 1px solid #ddd;
   }
   
