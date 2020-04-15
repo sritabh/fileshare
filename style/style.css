@@ -1,16 +1,16 @@
-table {
+#body {
     border-collapse: collapse;
     border-spacing: 0;
-    width: 100%;
+    width: 90%;
     border: 1px solid #ddd;
   }
   
-  th, td {
+p {
     text-align: left;
-    padding: 16px;
+    padding: 10px;
   }
   
-  tr:nth-child(even) {
+  p:nth-child(even) {
     background-color: #e0d6d6;
   }
   h2 {
