@@ -9,6 +9,8 @@
     <body id="body" onload="loadContent()">
         Waiting for server to respond!
         <button onclick="loadContent()">Check</button>
-        <button onclick="test()">Test</button>
+        <?php
+        echo "<p>New Server using php<p>";
+        ?>
     </body>
 </html>
