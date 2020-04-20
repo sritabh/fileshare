@@ -10,13 +10,12 @@ async function loadContent() {
   }
   xhttp.open("GET", "http://192.168.43.1:8080", true)
   xhttp.send();
-  //xhttp.responseType = 'blob';
   xhttp.onreadystatechange = async function(data) {
     console.log("ready state",this.readyState)
     console.log(data)
     if (this.status == 200) {
       console.log(this.readyState+ " Response state")
-      document.getElementById("body").innerHTML = this.responseText;
+      document.getElementById("body").innerHTML = "Receiving....."
       var myblob = new Blob([stringTobufferArray(this.response)])
       await myblob;
       console.log("response:-"+this.responseText.slice(0,80))
@@ -39,9 +38,9 @@ async function loadContent() {
     else {
       document.getElementById("body").innerHTML = bodyContent;
       ///Keep asking for the connection till we recieve one
-      setTimeout(()=>{
+      /*setTimeout(()=>{
         loadContent();
-      },5000);
+      },5000);*/
       console.log("No Connetcion");
     }
   };
