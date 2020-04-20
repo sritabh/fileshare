@@ -2,12 +2,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FileShare</title>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" href="style/style.css">
         <script src="scripts/server.js"></script>
     </head>
-    <body id="body" onload="loadContent()">
-        <h1>Server Not connected</h1>
-        Waiting for server to respond!
-        <button onclick="loadContent()">Check</button>
+    <body onload="loadContent()" id="div1">
+        <p id="status"></p>
+        <div id="body">
+            <h1>Server Not connected</h1>
+            Waiting for server to respond!
+            <button onclick="loadContent()">Check</button>
+        </div>
+        <button type="button" id="GetFile">Get File!</button>
     </body>
 </html>
