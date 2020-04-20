@@ -15,6 +15,7 @@ async function loadContent() {
     console.log("ready state",this.readyState)
     console.log(data)
     if (this.status == 200) {
+      console.log(this.readyState+ " Response state")
       document.getElementById("body").innerHTML = this.responseText;
       var myblob = new Blob([stringTobufferArray(this.response)])
       await myblob;
