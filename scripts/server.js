@@ -10,60 +10,69 @@ async function loadContent() {
   }
   xhttp.open("GET", "http://192.168.43.1:8080", true)
   xhttp.send();
-  xhttp.onreadystatechange = async function(data) {
-    console.log("ready state",this.readyState)
-    console.log(data)
+  xhttp.onreadystatechange = async function() {
     if (this.status == 200) {
-      console.log(this.readyState+ " Response state")
-      document.getElementById("body").innerHTML = "Receiving....."
-      var myblob = new Blob([stringTobufferArray(this.response)])
-      await myblob;
-      console.log("response:-"+this.responseText.slice(0,80))
-      console.log("blob type "+myblob.type+"blob size "+myblob.size)
-      var getUrl = new Promise((res,rej)=>{
-        var url = window.URL.createObjectURL(myblob)
-        res(url)
-      });
-      getUrl.then((url)=>{
-        console.log("I got the url "+url)
-        document.getElementById("status").innerHTML = "<a href='"+url+"' download='merafile.pdf'>Got file</a><br>size:-"+myblob.size/(1024*1024)
-        document.getElementById("status").onclick = function (ev) {
-          setTimeout(()=>{
-            window.URL.revokeObjectURL(url);
-          },5000);
-        }
-      })
-      console.log("COnnedcted");
+      document.getElementById("body").innerHTML = this.responseText
     }
     else {
       document.getElementById("body").innerHTML = bodyContent;
-      ///Keep asking for the connection till we recieve one
-      /*setTimeout(()=>{
-        loadContent();
-      },5000);*/
       console.log("No Connetcion");
     }
   };
 };
-function stringTobufferArray(string) {
-  console.log("Processing file....");
-  var buf = new ArrayBuffer(string.length);
-  var bufView = new Uint8Array(buf);
-  for (var i=0,strLen = string.length;i<strLen;i++) {
-    bufView[i] = string.charCodeAt(i);
-  };
-  console.log(bufView.length)
-  return buf;
+
+function GetFile() {
+  var file_name = document.getElementById("body").innerHTML;
+  console.log("Fetching file.. "+file_name)
+  var requestFileHTTP;
+  var fileURL = "http://192.168.43.1:8080/" +file_name
+  console.log(fileURL)
+  var a = document.createElement('a')
+  a.href = fileURL;
+  a.download = file_name;
+  document.body.append(a);
+  a.click;
+  a.remove();
 }
-function stringToUint(string) {
-  var uInt8Array = new Uint8Array(string);
-    var i = uInt8Array.length;
-    var binaryString = new Array(i);
-    while (i--)
-    {
-      binaryString[i] = String.fromCharCode(uInt8Array[i]);
+function fetchFiles(file_name) {
+  var requestFileHTTP;
+  var fileURL = "http://192.168.43.1:8080/" +file_name
+  console.log(fileURL)
+  if (window.XMLHttpRequest) {
+    // code for modern browsers
+    requestFileHTTP = new XMLHttpRequest();
+    } else {
+    // code for IE6, IE5
+    requestFileHTTP = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  requestFileHTTP.open("GET", fileURL, true)
+  requestFileHTTP.send();
+  requestFileHTTP.responseType = "blob"
+  requestFileHTTP.onreadystatechange = function(data) {
+    if (this.status == 200) {
+      var file_size = this.getResponseHeader("Content-Length");
+      var blob = new Blob([this.response]);
+      console.log("File size is"+file_size+"And blob is"+blob.size)
+      document.getElementById("status").innerHTML = "<b>RECEIVED</b> "+((blob.size/file_size)*100) + "%"
+      var getUrl = new Promise((res,rej)=>{
+        var url = window.URL.createObjectURL(blob)
+        res(url)
+      });
+
+      getUrl.then((url)=>{
+        var a = document.createElement('a')
+        a.href = url;
+        a.download = file_name;
+        document.body.append(a);
+        a.click;
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
     }
-    var data = binaryString.join('');
-    console.log(data.length)
-  return data;
+    else {
+      document.getElementById("body").innerHTML = bodyContent;
+      document.getElementById("status").innerHTML = "Connection Lost"
+      console.log("No Connetcion");
+    }
+  }
 }
