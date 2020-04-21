@@ -12,7 +12,9 @@ async function loadContent() {
   xhttp.send();
   xhttp.onreadystatechange = async function() {
     if (this.status == 200) {
+      var fileURL = "http://192.168.43.1:8080/" +this.responseText
       document.getElementById("body").innerHTML = this.responseText
+      document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>GET FILE</a>"
     }
     else {
       document.getElementById("body").innerHTML = bodyContent;
