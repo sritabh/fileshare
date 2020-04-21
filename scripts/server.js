@@ -11,10 +11,12 @@ async function loadContent() {
   xhttp.open("GET", "http://192.168.43.1:8080", true)
   xhttp.send();
   xhttp.onreadystatechange = async function() {
-    if (this.status == 200) {
+    if (this.readyState == 4 && this.status == 200) {
       var fileURL = "http://192.168.43.1:8080/" +this.responseText
-      document.getElementById("body").innerHTML = this.responseText
-      document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>GET FILE</a>"
+      document.getElementById("heading").innerHTML = "<h2>Ready To Recieve Files!</h2>"
+      document.getElementById("body").innerHTML = "<p>"+this.responseText+"<br><span id='receiving_status'></span></p>"
+      //document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>GET FILE</a>"
+      fetchFiles(this.responseText)
     }
     else {
       document.getElementById("body").innerHTML = bodyContent;
@@ -50,31 +52,32 @@ function fetchFiles(file_name) {
   requestFileHTTP.open("GET", fileURL, true)
   requestFileHTTP.send();
   requestFileHTTP.responseType = "blob"
+  requestFileHTTP.onprogress = function(event){
+    var file_size = event.total
+    var received_data = event.loaded
+    document.getElementById("receiving_status").innerHTML = "<b>Received</b> "+ Math.round((received_data/file_size)*100) + "%"
+  }
   requestFileHTTP.onreadystatechange = function(data) {
-    if (this.status == 200) {
-      var file_size = this.getResponseHeader("Content-Length");
+    if (this.readyState == 4 && this.status == 200) {
+      console.log("File Recieved!")
       var blob = new Blob([this.response]);
-      console.log("File size is"+file_size+"And blob is"+blob.size)
-      document.getElementById("status").innerHTML = "<b>RECEIVED</b> "+((blob.size/file_size)*100) + "%"
       var getUrl = new Promise((res,rej)=>{
         var url = window.URL.createObjectURL(blob)
         res(url)
       });
-
       getUrl.then((url)=>{
-        var a = document.createElement('a')
+        var a = document.createElement('a');
         a.href = url;
         a.download = file_name;
         document.body.append(a);
-        a.click;
+        //a.click();
         a.remove();
         window.URL.revokeObjectURL(url);
-      })
+        document.getElementById("body").innerHTML +="<span id='saved'>SAVED</span>"
+      }).catch((err)=>{console.log("err "+err)})
     }
-    else {
-      document.getElementById("body").innerHTML = bodyContent;
+    else if(this.status != 200) {
       document.getElementById("status").innerHTML = "Connection Lost"
-      console.log("No Connetcion");
     }
   }
 }

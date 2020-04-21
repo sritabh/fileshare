@@ -1,8 +1,10 @@
-#received_data {
+#body {
     border-collapse: collapse;
     border-spacing: 0;
-    margin:30px;
-    border: 1px solid #ddd;
+    margin:5px;
+    padding: 5px;
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 10px;
   }
   
 p {
@@ -10,10 +12,23 @@ p {
     padding: 10px;
   }
   
-  p:nth-child(even) {
+  p:nth-child(odd) {
     background-color: #e0d6d6;
   }
   h2 {
       text-align: center;
       color:green;
+      font-size:30px;
   }
+#saved {
+  font-size: 15px;
+  color: rgb(100, 100, 0);
+  margin-top: -50px;
+  font-weight: bolder;
+}
+#receiving_status {
+  font-size: 15px;
+  color: rgb(100, 100, 100);
+  margin-top: -50px;
+  font-weight: bolder;
+}
