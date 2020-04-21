@@ -70,7 +70,7 @@ function fetchFiles(file_name) {
         a.href = url;
         a.download = file_name;
         document.body.append(a);
-        //a.click();
+        a.click();
         a.remove();
         window.URL.revokeObjectURL(url);
         document.getElementById("body").innerHTML +="<span id='saved'>SAVED</span>"
