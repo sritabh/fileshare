@@ -1,5 +1,6 @@
 async function loadContent() {
   var bodyContent = document.getElementById("body").innerHTML
+  var outToScreenHTML = "";
   var xhttp;
   if (window.XMLHttpRequest) {
     // code for modern browsers
@@ -12,12 +13,25 @@ async function loadContent() {
   xhttp.send();
   xhttp.onreadystatechange = async function() {
     if (this.readyState == 4 && this.status == 200) {
-      var fileURL = "http://192.168.43.1:8080/" +this.responseText
+      var files = JSON.parse(this.responseText);
+      var getFiles = new Promise((res,rej)=>{
+        var i=0;
+        if (files !=null) {
+          for (file in files) {
+            var fileURL = "http://192.168.43.1:8080/" +file
+            console.log(fileURL)
+            outToScreenHTML +="<p>"+file+"<br><span id='receiving_status"+i+"'></span><span class='downloadLink'><a href='"+fileURL+"' download='"+file+"'>Download!</a></span></p>";
+            i++;
+          }
+        }
+        res(outToScreenHTML)
+      });
+      getFiles.then((all_files)=>{
+        document.getElementById("body").innerHTML = all_files
+      })
       document.getElementById("heading").innerHTML = "<h2>Ready To Recieve Files!</h2>"
-      document.getElementById("body").innerHTML = "<p>"+this.responseText+"<br><span id='receiving_status'></span></p>"
-      document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>Debug Download</a>"
-      console.log(fileURL)
-      fetchFiles(this.responseText)
+      //document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>Debug Download</a>"
+      //fetchFiles(this.responseText)
     }
     else {
       document.getElementById("body").innerHTML = bodyContent;

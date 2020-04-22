@@ -32,3 +32,6 @@ p {
   margin-top: -50px;
   font-weight: bolder;
 }
+.downloadLink {
+  text-align: right;
+}
