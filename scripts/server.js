@@ -15,7 +15,8 @@ async function loadContent() {
       var fileURL = "http://192.168.43.1:8080/" +this.responseText
       document.getElementById("heading").innerHTML = "<h2>Ready To Recieve Files!</h2>"
       document.getElementById("body").innerHTML = "<p>"+this.responseText+"<br><span id='receiving_status'></span></p>"
-      //document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>GET FILE</a>"
+      document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>Debug Download</a>"
+      console.log(fileURL)
       fetchFiles(this.responseText)
     }
     else {
@@ -25,19 +26,7 @@ async function loadContent() {
   };
 };
 
-function GetFile() {
-  var file_name = document.getElementById("body").innerHTML;
-  console.log("Fetching file.. "+file_name)
-  var requestFileHTTP;
-  var fileURL = "http://192.168.43.1:8080/" +file_name
-  console.log(fileURL)
-  var a = document.createElement('a')
-  a.href = fileURL;
-  a.download = file_name;
-  document.body.append(a);
-  a.click;
-  a.remove();
-}
+
 function fetchFiles(file_name) {
   var requestFileHTTP;
   var fileURL = "http://192.168.43.1:8080/" +file_name
@@ -55,7 +44,13 @@ function fetchFiles(file_name) {
   requestFileHTTP.onprogress = function(event){
     var file_size = event.total
     var received_data = event.loaded
-    document.getElementById("receiving_status").innerHTML = "<b>Received</b> "+ Math.round((received_data/file_size)*100) + "%"
+    var receivedPercent = Math.round((received_data/file_size)*100)
+    if (receivedPercent == 100) {
+      document.getElementById("receiving_status").innerHTML = "<b>Processing...</b>"
+    }
+    else {
+      document.getElementById("receiving_status").innerHTML = "<b>Received</b> "+ receivedPercent + "%"
+    }
   }
   requestFileHTTP.onreadystatechange = function(data) {
     if (this.readyState == 4 && this.status == 200) {
@@ -73,7 +68,7 @@ function fetchFiles(file_name) {
         a.click();
         a.remove();
         window.URL.revokeObjectURL(url);
-        document.getElementById("body").innerHTML +="<span id='saved'>SAVED</span>"
+        document.getElementById("receiving_status").innerHTML ="<span id='saved'>SAVED</span>"
       }).catch((err)=>{console.log("err "+err)})
     }
     else if(this.status != 200) {
