@@ -26,12 +26,27 @@ p {
   margin-top: -50px;
   font-weight: bolder;
 }
-#receiving_status {
+.receiving_status {
   font-size: 15px;
   color: rgb(100, 100, 100);
   margin-top: -50px;
   font-weight: bolder;
+  padding-right: 40px;
 }
 .downloadLink {
   text-align: right;
+  float: right;
+  margin-right: 10px;
+}
+.saveFileBTN {
+  background-color: #4CAF50;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  padding: 5px;
+  padding-bottom: 5px;
+  float: right;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 }
