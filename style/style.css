@@ -4,9 +4,8 @@
 }
 *{
   font-family: openSans;
-  font-size: 15px;
 }
-#credits {
+.credits {
   text-align: center;
   vertical-align: top;
   margin-top: 0px;
@@ -24,6 +23,7 @@
     max-width: 500px;
     text-align: center;
     background-color: white;
+    font-size: 15px;
   }
   
 div.downloader {
