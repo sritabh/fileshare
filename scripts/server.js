@@ -77,7 +77,6 @@ async function saveFiles(file_name,id,file_size) {
     while (true) {
       const {done, value} = await fileReader.read()
       if (done) {
-        document.getElementById(statusID).innerHTML = "<span id='saved'>SAVED</span>"
         writer.close()
         break;
       }

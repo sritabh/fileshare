@@ -8,9 +8,12 @@
 .credits {
   text-align: center;
   vertical-align: top;
-  margin-top: 0px;
+  margin-bottom: -30px;
   color: azure;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+}
+body {
+  background-image: linear-gradient(to left, #8f94fb, #4e54c8); 
 }
 #body {
     border-collapse: collapse;
@@ -24,6 +27,7 @@
     text-align: center;
     background-color: white;
     font-size: 15px;
+    z-index: 100;
   }
   
 div.downloader {
