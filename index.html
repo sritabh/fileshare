@@ -4,6 +4,7 @@
     <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/floatingSquareBG.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/web-streams-polyfill@2.0.2/dist/ponyfill.min.js"></script>
         <!-- includes blob.stream() polyfill -->
@@ -12,8 +13,9 @@
         <script src="scripts/server.js"></script>
     </head>
     <body onload="loadContent()">
-        <h2 id="heading"></h2>
-        <p id="credits"><b>FileShare</b> by <b>SobyDamn</b></p>
+        <div class="area" >
+        <p id="credits"><span style="font-size: 20px;"><b>FileShare</b></span><sub>by <b>SobyDamn</b></sub></p>
+        <p style="font-size: 10px; color:wheat;text-align: center;" id="heading">hll</p>
         <center>
             <div id="body">
                 <h1>Server Not connected</h1>
@@ -21,5 +23,18 @@
                 <button onclick="loadContent()">Check</button>
             </div>
         </center>
+        </div>
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
     </body>
 </html>

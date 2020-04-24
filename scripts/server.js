@@ -41,7 +41,7 @@ async function loadContent() {
       getFiles.then((all_files)=>{
         document.getElementById("body").innerHTML = all_files;
       })
-      document.getElementById("heading").innerHTML = "<h2>Ready To Recieve Files!</h2>"
+      document.getElementById("heading").innerHTML = "<h6>Ready To Recieve Files!</h6>"
     }
     else {
       document.getElementById("body").innerHTML = bodyContent;

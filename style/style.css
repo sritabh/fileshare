@@ -9,11 +9,9 @@
 #credits {
   text-align: center;
   vertical-align: top;
-  margin-top: -20px;
+  margin-top: 0px;
+  color: azure;
   padding-bottom: 20px;
-}
-body {
-
 }
 #body {
     border-collapse: collapse;
@@ -25,7 +23,7 @@ body {
     min-height: 300px;
     max-width: 500px;
     text-align: center;
-    background-color: while;
+    background-color: white;
   }
   
 div.downloader {
@@ -54,7 +52,7 @@ div.downloader {
 }
   h2 {
       text-align: center;
-      color:green;
+      color: whitesmoke;
       font-size:30px;
   }
 #saved {
