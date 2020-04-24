@@ -1,4 +1,6 @@
 var resonseLength = 0;
+var fileStatus = `<i id="icons" class="material-icons">file_download</i>`
+var fileStatusDone = `<i style="color:white;font-weight:900;"class="material-icons">done</i>`
 async function loadContent() {
   var bodyContent = document.getElementById("body").innerHTML
   var outToScreenHTML = "";
@@ -20,10 +22,11 @@ async function loadContent() {
         if (files !=null) {
           for (file in files) {
             var fileURL = "http://192.168.43.1:8080/" +file
+            var fileSize = files[file]["file_size"]
             console.log(fileURL);
             var statusID = "receiving_status"+i;
             var writeHTML = new Promise(()=>{
-              outToScreenHTML +="<p class='downloader'>"+file+"<br><span class='receiving_status' id='"+statusID+"'></span><span class='downloadLink'><a href='"+fileURL+"' download='"+file+`'>Download!</a><button class="saveFileBTN" onclick="saveFiles('${file}','${statusID}')">⯆</button></span></p>`;
+              outToScreenHTML +=`<div class="downloadContainer" id="downloadContaier${i}"><div class='downloader'><div class='fileDetail'>`+file+`</div><div class='fileBTN'><div class="loader"><button class="saveFileBTN" id="saveFileBTN${i}" onclick="saveFiles('${file}','${i}','${fileSize}')"><i class='receiving_status' id="statusID${i}">${fileStatus}</i></button></div></div></div><div class="downloadProgressBar" id="downloadProgressBar${i}"><div class="progressBar" id="progressBar${i}"></div></div></div>`;
             })
             writeHTML.then(()=>{
               document.getElementById("saveFile").onclick = ()=>{
@@ -39,8 +42,6 @@ async function loadContent() {
         document.getElementById("body").innerHTML = all_files;
       })
       document.getElementById("heading").innerHTML = "<h2>Ready To Recieve Files!</h2>"
-      //document.getElementById("status").innerHTML = "<a href='"+fileURL+"' download='"+this.responseText+"'>Debug Download</a>"
-      //fetchFiles(this.responseText)
     }
     else {
       document.getElementById("body").innerHTML = bodyContent;
@@ -56,57 +57,68 @@ function checkNewFiles(response) {
     return newFiles;
   }
 }
-function saveFiles(file_name,statusID) {
+async function saveFiles(file_name,id,file_size) {
   console.log("Receivng.......");
-
-  var requestFileHTTP;
   var fileURL = "http://192.168.43.1:8080/" +file_name
-  if (window.XMLHttpRequest) {
-    // code for modern browsers
-    requestFileHTTP = new XMLHttpRequest();
-    } else {
-    // code for IE6, IE5
-    requestFileHTTP = new ActiveXObject("Microsoft.XMLHTTP");
+  let receivedData = 0
+  const fileStream = streamSaver.createWriteStream(file_name, {
+    size: file_size
+  })
+  //automatic download
+  /*if (window.WritableStream && file.body.pipeTo) {
+    console.log("hello")
+    return file.body.pipeTo(fileStream)
+        .then(() => console.log('done writing'))
+  }*/
+  //manual writing showing status on screen aswell
+  fetch(fileURL).then(async (resolve,reject)=>{
+    window.writer = fileStream.getWriter()
+    const fileReader = resolve.body.getReader()
+    while (true) {
+      const {done, value} = await fileReader.read()
+      if (done) {
+        document.getElementById(statusID).innerHTML = "<span id='saved'>SAVED</span>"
+        writer.close()
+        break;
+      }
+      else {
+        writer.write(value)
+        receivedData +=value.length
+      }
+      var receivedPercent = Math.round((receivedData/file_size)*100);
+      fileTransferStatus(receivedPercent,id);
+    }
+  }).catch((err)=>{
+    console.log("err in connection "+err)
+  })
+}
+function fileTransferStatus(progress,id) {
+  var progressBar = `progressBar${id}`
+  var downloadProgressBar = `downloadProgressBar${id}`
+  var statusID = `statusID${id}`
+  var downloadContainer = `downloadContaier${id}`
+  var saveFileBTN = `saveFileBTN${id}`
+  if (progress == 100) {
+    //file received
+    document.getElementById(progressBar).style.display = "none";
+    document.getElementById(downloadProgressBar).style.display = "none";
+    document.getElementById(statusID).innerHTML = fileStatusDone;
+    document.getElementById(downloadContainer).style.boxShadow ="none";
+    document.getElementById(saveFileBTN).style.animation = "none";
   }
-  requestFileHTTP.open("GET", fileURL, true)
-  requestFileHTTP.send();
-  requestFileHTTP.responseType = "blob"
-  requestFileHTTP.onprogress = function(event){
-    var file_size = event.total
-    var received_data = event.loaded
-    var receivedPercent = Math.round((received_data/file_size)*100)
-    if (receivedPercent == 100) {
-      document.getElementById(statusID).innerHTML = "<b>Processing...</b>"
+  else {
+    //file receving
+    document.getElementById(statusID).innerHTML = progress+"%"
+    if (document.getElementById(progressBar).style.display != "block" && document.getElementById(downloadProgressBar).style.display != "block") {
+      document.getElementById(progressBar).style.display = "block";
+      document.getElementById(downloadProgressBar).style.display = "block"
+      document.getElementById(progressBar).style.width = progress + "%";
     }
     else {
-      document.getElementById(statusID).innerHTML = "<b>Received</b> "+ receivedPercent + "%"
+      document.getElementById(progressBar).style.width = progress + "%";
     }
-  }
-  requestFileHTTP.onreadystatechange = function(data) {
-    if (this.readyState == 4 && this.status == 200) {
-      console.log("File Recieved!")
-      document.getElementById(statusID).innerHTML ="<span id='saved'>SAVED</span>"
-      var blob = new Blob([this.response]);
-      const fileStream = streamSaver.createWriteStream(file_name, {
-        size: blob.size // Makes the procentage visiable in the download
-      })
-      const readableStream = blob.stream();
-      if (window.WritableStream && readableStream.pipeTo) {
-        return readableStream.pipeTo(fileStream)
-          .then(() => console.log('done writing'))
-      }
-      window.writer = fileStream.getWriter()
-
-        const reader = readableStream.getReader()
-        const pump = () => reader.read()
-          .then(res => res.done
-            ? writer.close()
-            : writer.write(res.value).then(pump))
-
-        pump()
-    }
-    else if(this.status != 200) {
-      document.getElementById("status").innerHTML = "Connection Lost"
+    if (document.getElementById(saveFileBTN).style.animation !="shadow-pulse 1s infinite") {
+      document.getElementById(saveFileBTN).style.animation = "shadow-pulse 1s infinite";
     }
   }
 }

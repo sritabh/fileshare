@@ -1,20 +1,57 @@
+@font-face {
+  font-family: openSans;
+  src: url(OpenSans-Regular.ttf);
+}
+*{
+  font-family: openSans;
+  font-size: 15px;
+}
+#credits {
+  text-align: center;
+  vertical-align: top;
+  margin-top: -20px;
+  padding-bottom: 20px;
+}
+body {
+
+}
 #body {
     border-collapse: collapse;
     border-spacing: 0;
-    margin:5px;
-    padding: 5px;
+    margin:2px;
+    padding: 10px;
     border: 1px solid rgb(100, 100, 100);
     border-radius: 10px;
+    min-height: 300px;
+    max-width: 500px;
+    text-align: center;
+    background-color: while;
   }
   
-p {
+div.downloader {
     text-align: left;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
   }
   
-  p:nth-child(odd) {
-    background-color: #e0d6d6;
+  div.downloadContainer {
+    box-shadow: 1px 3px 8px black;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    padding: 5px;
+    padding-bottom: 5px;
+    background-color: rgb(250, 244, 227);
   }
+  @keyframes shadow-pulse
+{
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0);
+  }
+}
   h2 {
       text-align: center;
       color:green;
@@ -26,27 +63,53 @@ p {
   margin-top: -50px;
   font-weight: bolder;
 }
-.receiving_status {
-  font-size: 15px;
-  color: rgb(100, 100, 100);
-  margin-top: -50px;
-  font-weight: bolder;
-  padding-right: 40px;
+#icons {
+  color: white;
 }
-.downloadLink {
-  text-align: right;
-  float: right;
-  margin-right: 10px;
+.receiving_status {
+  font-size: 10px;
+  color: white;
+  font-weight: bolder;
+}
+.fileDetail{
+  width: 75%;
+  word-wrap: break-word;
+  display: inline-block;
+  min-height: 40px;
+}
+.fileBTN {
+  width: 20%;
+  border-left: 1px solid rgb(184, 182, 182);
+  text-align: center;
+  align-items: center;
+  display: inline-block;
 }
 .saveFileBTN {
   background-color: #4CAF50;
+  background-image: linear-gradient(to right, #2F0743,#41295a);
   border-radius: 50%;
   border: none;
   color: white;
   padding: 5px;
-  padding-bottom: 5px;
-  float: right;
   text-align: center;
   text-decoration: none;
+  height: 35px;
+  width: 35px;
   cursor: pointer;
+}
+div.downloadProgressBar {
+  
+  border-radius: 10px;
+  height: 6px;
+  background-color: #ddd;
+  display: none;
+}
+div.progressBar {
+  border-radius: 10px;
+  height: 6px;
+  width: 30%;
+  background-color: rgb(55, 186, 230);
+  padding-left: 10px;
+  padding-right: 10px;
+  display: none;
 }
