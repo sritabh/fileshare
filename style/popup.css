@@ -16,11 +16,10 @@
   /* Modal Content */
   .modal-content {
     position: relative;
-    background-color: rgb(76, 73, 87);
+    background-image: linear-gradient(to left, rgb(58, 53, 155),rgb(25, 19, 145)); 
     color:white;
     margin: auto;
     padding: 0;
-    border: 1px solid #888;
     width: 75%;
     max-width: 300px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
@@ -58,13 +57,11 @@
     cursor: pointer;
   }
 .popHeader {
-    display: flex;
-    justify-content: space-between;
-    min-height: 40px;
+    min-height: 30px;
     font-size: 20px;
     padding: 5px;
     padding-left: 10px;
-    border-bottom: 0.3px solid #ddd;
+    border-bottom: 0.3px solid rgba(221, 221, 221, 0.219);
 }
 #popHeading {
     text-align: start;
@@ -75,17 +72,17 @@
 }
 #popFooter {
     text-align: right;
-    border-top: 0.5px dashed #ddd;
+    border-top: 0.5px solid rgba(221, 221, 221, 0.219);
     min-height:40;
 }
 .closePop {
     margin: 5px;
-    min-width: 60px;
+    min-width: 80px;
     color: white;
     font-weight: 400;
     padding: 5px;
     font-size: large;
     border-radius: 10px;
     border:none;
-    background-color: #888;
+    background-color: rgb(97, 199, 54);
 }
