@@ -13,7 +13,7 @@
   padding-bottom: 10px;
 }
 body {
-  background-image: linear-gradient(to left, #8f94fb, #4e54c8); 
+  background-image: linear-gradient(to left, rgb(58, 53, 155),rgb(25, 19, 145)); 
 }
 #body {
     border-collapse: collapse;
@@ -82,12 +82,12 @@ div.downloader {
 .fileBTN {
   width: 20%;
   border-left: 1px solid rgb(184, 182, 182);
-  text-align: center;
+  display: flex;
   align-items: center;
-  display: inline-block;
+  justify-content: center;
 }
 .saveFileBTN {
-  background-color: #4CAF50;
+  background-color: #2F0743;
   background-image: linear-gradient(to right, #2F0743,#41295a);
   border-radius: 50%;
   border: none;
@@ -95,6 +95,7 @@ div.downloader {
   padding: 5px;
   text-align: center;
   text-decoration: none;
+  margin: auto;
   height: 35px;
   width: 35px;
   cursor: pointer;
@@ -114,4 +115,79 @@ div.progressBar {
   padding-left: 10px;
   padding-right: 10px;
   display: none;
+}
+#statusBar {
+  margin: 25px;
+  display: flex;
+  max-width: 500px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 25px;
+  padding: 2px;
+}
+#connection{
+  display: flex;
+}
+#refreshBTN {
+  background: none;
+  color: aliceblue;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  font-size: large;
+  text-align: center;
+  margin-right: 5px;
+  font-weight: 900;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 1s linear infinite;
+}
+
+#receiveAllBTN {
+  border: none;
+  border-radius: 5px;
+  background-color: #2F0743;
+  color: white;
+  padding: 5px;
+  font-weight: bolder;
+  min-width: 90px;
+  display: none;
+}
+#receiveAllBTN:hover {
+  background-color: #41295a;
+}
+#refreshBTN:hover {
+  border:0.5px solid #2F0743;
+  animation: shadow-pulse 1s infinite;
+  -webkit-animation: shadow-pulse 1s infinite;
+}
+#connectionStatus {
+  color: white;
+  font-weight: bolder;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.helpBTN {
+  position:absolute;
+   top:0;
+   right:0;
+   margin: 15px;
+   margin-top: 30px;
+   color:rgb(250, 244, 227,0.5);
+   font-weight: bolder;
+}
+.downloadBTN {
+  font-size: 15px;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 40px;
+  background-color: #41295a;
 }

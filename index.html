@@ -4,6 +4,7 @@
     <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/popup.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/web-streams-polyfill@2.0.2/dist/ponyfill.min.js"></script>
         <!-- includes blob.stream() polyfill -->
@@ -13,18 +14,54 @@
     </head>
     <body onload="loadContent()">
         <center>
-            <div class="credits" style="width: 60%;max-width: 300px;">
+            <div class="credits" style="width: 60%;max-width: 300px; padding-bottom: 30px;">
                 <div id="appName" style="font-size: 40px;font-weight: 900;">FileShare</div>
-                <div id="myName" style="margin-top: -10px;float: right;">by <span style="font-size: 20px;font-weight: 900;">SobyDamn</span></div>
+                <div id="myName" style="margin-top: -10px;float: right; font-size: 10px;">by <span style="font-size: 18px;font-weight: 900;">SobyDamn</span></div>
+            </div>
+        </center>
+        <div class="helpBTN"><i class="material-icons">help_outline</i></div>
+        <center>
+            <div id="statusBar">
+                <div id="connection">
+                    <div id="refreshBTN" onclick="refresh()"><i class="material-icons">refresh</i></div>
+                    <div id="connectionStatus">Checking Connection..</div>
+                </div>
+                <button id="receiveAllBTN" value="false" onclick="receiveAll()">
+                    Receive All
+                </button>
             </div>
         </center>
         <p style="font-size: 30px; color:wheat;text-align: center; margin-bottom: -30px;" id="heading"></p>
         <center>
             <div id="body">
-                <h1>Server Not connected</h1>
-                Waiting for server to respond!
-                <button onclick="loadContent()">Check</button>
+                <h3>Hey!!</h3>
+                Looks like no connection is available!<br>
+                In case you're trying to connect try the refresh button <div onclick="refresh()"><i style="color:#a8a2a2" class="material-icons">refresh</i></div> 
+                or try visiting help page <sub><i class="material-icons">help_outline</i></sub>
+                or If you have came here <span onclick="byAccident()"><b>by accident</b></span> or just to check  then you might give it a try aswell!
+                <br>
+                <button class="downloadBTN">
+                    Download App!
+                </button>
             </div>
         </center>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="popHeader">
+                    <div style="font-weight: 800;" id="popHeading">
+                        Error
+                    </div>
+                </div>
+                <div id="popContent">
+                    Some error message
+                </div>
+                <div id = "popFooter">
+                    <button class="closePop" onclick="closeErrorPop()">close</button>
+                </div>
+            </div>
+        </div>
+  
     </body>
 </html>
