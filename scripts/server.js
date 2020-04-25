@@ -181,12 +181,12 @@ function fileSizetoReadable(size) {
   }
   else if (size >= 1024*1024 && size < 1024*1024*1024) {
     var x = size/(1024*1024);
-    file_size = x.toFixed(2)+"MB"
+    file_size = x.toFixed(2)+"MB";
     return file_size
   }
   else {
     var x = size/(1024*1024*1024);
-    file_size = x.toFixed(2)+"GB"
+    file_size = x.toFixed(2)+"GB";
     return file_size
   }
 }
