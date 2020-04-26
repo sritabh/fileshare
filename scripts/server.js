@@ -307,3 +307,8 @@ function byAccident() {
   var msg = `<p style="padding-top:20px; margin-right:auto;margin-left:auto;">There are no accidents!<br>-Grand Master Oogway</p>`
   showPopUp(type,msg);
 }
+function test() {
+  console.log("test")
+  fetch("http://192.168.43.1:8080").then(response => response.json())
+  .then(data => console.log(data))
+}
