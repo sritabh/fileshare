@@ -28,8 +28,7 @@ body {
     background-color: white;
     font-size: 15px;
     overflow-y: scroll;
-    max-height: 80%; 
-    
+    max-height: 80%;
   }
   ::-webkit-scrollbar {
     width: 2px;
