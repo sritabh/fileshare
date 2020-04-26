@@ -115,7 +115,7 @@
       if (!mitmTransporter) {
         mitmTransporter = isSecureContext
           ? makeIframe(streamSaver.mitm)
-          : makePopup(streamSaver.mitm)
+          : makeIframe(streamSaver.mitm)
       }
     }
   
