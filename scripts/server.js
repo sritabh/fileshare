@@ -182,6 +182,9 @@ function receiveAll() {
     if (receiveAllBTN.value == "false") {
       receiveAllBTN.value = "true";
       document.getElementById("receiveAllBTN").innerText = "Pause";
+      var type = "Experimental Feature!"
+      var msg = "This button is highly experimental and will require permission like<br>-Show PopUps<br>-Download Multiple Files<br>And More..<br>I would have touched this only if I knew what the above things are!"
+      showPopUp(type,msg)
     }
     else {
       receiveAllBTN.value = "false"
@@ -202,22 +205,30 @@ function fetchAllFiles(id) {
   var fileClickedBefore = fileName in fileReceivingStatus
   var receiveAllBTN = document.getElementById("receiveAllBTN");
   if (!isReceiving) {
-    if (receiveAllBTN.value == "true" && id < totalFileToBeReceived) {
-      if (!fileClickedBefore) {
-        //download if not touched before
-        //doesnt exists in receiving object
-        receivedFile++;
-        document.getElementById(saveBTNId).click();
+    if (receiveAllBTN.value == "true") {
+      if (id < totalFileToBeReceived) {
+        if (!fileClickedBefore) {
+          //download if not touched before
+          //doesnt exists in receiving object
+          receivedFile++;
+          document.getElementById(saveBTNId).click();
+        }
+        else if (fileReceivingStatus[fileName] != fileStatusReceived || fileReceivingStatus[fileName] == fileStatusCanceled) {
+          receivedFile++;
+          document.getElementById(saveBTNId).click();
+        }
+        else if (fileReceivingStatus[fileName] == fileStatusReceived) {
+          receivedFile++;
+          var downloadContainer = `downloadContaier${id}`
+          document.getElementById(downloadContainer).style.boxShadow ="none";
+          fetchAllFiles(receivedFile) //jump to next file
+        }
       }
-      else if (fileReceivingStatus[fileName] != fileStatusReceived || fileReceivingStatus[fileName] == fileStatusCanceled) {
-        receivedFile++;
-        document.getElementById(saveBTNId).click();
-      }
-      else if (fileReceivingStatus[fileName] == fileStatusReceived) {
-        receivedFile++;
-        var downloadContainer = `downloadContaier${id}`
-        document.getElementById(downloadContainer).style.boxShadow ="none";
-        fetchAllFiles(receivedFile) //jump to next file
+      else {
+        //all file received change the resume button value
+        var receiveAllBTN = document.getElementById("receiveAllBTN");
+        receiveAllBTN.value = "false";
+        document.getElementById("receiveAllBTN").innerText = "Done!";
       }
     }
   }
