@@ -141,9 +141,9 @@ function fileTransferStatus(progress,id) {
   else {
     //file receving
     document.getElementById(statusID).innerHTML = progress+"%"
-    if (document.getElementById(progressBar).style.display != "block" && document.getElementById(downloadProgressBar).style.display != "block") {
+    if (document.getElementById(progressBar).style.display != "block" && document.getElementById(downloadProgressBar).style.display != "flex") {
       document.getElementById(progressBar).style.display = "block";
-      document.getElementById(downloadProgressBar).style.display = "block"
+      document.getElementById(downloadProgressBar).style.display = "flex"
       document.getElementById(progressBar).style.width = progress + "%";
     }
     else {
