@@ -111,9 +111,8 @@ div.downloadProgressBar {
 div.progressBar {
   border-radius: 10px;
   height: 6px;
-  width: 30%;
+  width: 1%;
   background-color: rgb(55, 186, 230);
-  padding-left: 10px;
   padding-right: 10px;
   display: none;
 }
