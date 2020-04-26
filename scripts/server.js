@@ -202,7 +202,7 @@ function fetchAllFiles(id) {
   var fileClickedBefore = fileName in fileReceivingStatus
   var receiveAllBTN = document.getElementById("receiveAllBTN");
   if (!isReceiving) {
-    if (receiveAllBTN.value == "true") {
+    if (receiveAllBTN.value == "true" && id < totalFileToBeReceived) {
       if (!fileClickedBefore) {
         //download if not touched before
         //doesnt exists in receiving object
