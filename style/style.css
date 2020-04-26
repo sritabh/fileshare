@@ -27,9 +27,28 @@ body {
     text-align: center;
     background-color: white;
     font-size: 15px;
-    z-index: 100;
+    overflow-y: scroll;
+    max-height: 80%; 
+    
+  }
+  ::-webkit-scrollbar {
+    width: 2px;
   }
   
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: none; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 div.downloader {
     text-align: left;
     padding: 10px;
@@ -191,4 +210,13 @@ div.progressBar {
   border-radius: 5px;
   margin: 40px;
   background-color: #41295a;
+}
+.backBTN {
+  position:absolute;
+   top:0;
+   left:0;
+   margin: 15px;
+   margin-top: 30px;
+   color:rgb(250, 244, 227,0.5);
+   font-weight: bolder;
 }

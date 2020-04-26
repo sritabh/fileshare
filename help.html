@@ -1,0 +1,134 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileShare</title>
+    <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="style/helpPage.css">
+        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/popup.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <center>
+            <div class="credits" style="width: 60%;max-width: 300px; padding-bottom: 30px;">
+                <div id="appName" style="font-size: 40px;font-weight: 900;">FileShare</div>
+                <div id="myName" style="margin-top: -10px;float: right; font-size: 10px;">by <span style="font-size: 18px;font-weight: 900;">SobyDamn</span></div>
+            </div>
+        </center>
+        <div class="backBTN"><a style="text-decoration: none; color:#a8a2a2" href="index.html"><i class="material-icons">arrow_back</i></a></div>
+        <p style="font-size: 30px; color:wheat;text-align: center; margin-bottom: -30px;" id="heading"></p>
+        <center>
+            <div id="body">
+                <h1>Help!</h1>
+                <div class ="questionLinks">
+                    <ul>
+                        <li>
+                            <a class="linksToAnswer" href="#NoConnection">Not able to connect</a>
+                        </li>
+                        <li>
+                            <a class="linksToAnswer" href="#NotReceived">File not saved but shown received</a>
+                        </li>
+                        <li>
+                            <a class="linksToAnswer" href="#ReceiveAllNotWorking">Receive all button not working</a>
+                        </li>
+                        <li>
+                            <a class="linksToAnswer" href="#PopupsOnReceive">Getting popups on each receive</a>
+                        </li>
+                        <li>
+                            <a class="linksToAnswer" href="#ReceivedCorruptedFile">Received corrupted files</a>
+                        </li>
+                        <li>
+                            <a class="linksToAnswer" href="#contactMe">Contact Dev</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="answersHolderBox" id="NoConnection">
+                    <h3>1.Not able to connect</h3>
+                    <p class="answers">
+                        <li>Make sure you're connected to the hotspot of sender.</li>
+                        <li>In case you're connected to the hotspot but still not able to connect to receive file ask sender to restart the app.</li>
+                        <a class="linksToAnswer" href="#contactMe">Still having problem</a>
+                    </p>
+                </div>
+                <div class="answersHolderBox" id="NotReceived">
+                    <h3>2.File not saved but shown received</h3>
+                    <p class="answers">
+                        This happens when the popup permission is blocked or u had interrupted the process that closes the permission to write the file on your disk.
+                        <li>Try enabling popups or remove popup blocker from your browser.</li>
+                        <li>Hard refresh the page or open the site in another window or browser.</li>
+                        <a class="linksToAnswer" href="#contactMe">Still having problem</a>
+                    </p>
+                </div>
+                <div class="answersHolderBox" id="ReceiveAllNotWorking">
+                    <h3>3.Receive all button not working</h3>
+                    <p class="answers">
+                        The 
+                        <span class="receiveAllBTN">
+                            Receive All
+                        </span>
+                         is experimental. This requires permissions like:-
+                         <li>
+                             Show popups
+                         </li>
+                         <li>
+                             Allow multiple downloads
+                         </li>
+                         <li>
+                             And More
+                         </li>
+                         This is because there's no way yet for me to ask for these permissions from the browser.<br>
+                         I would prefer you not to use this button unless you don't wanna end up in some bugs<br>
+                        <a class="linksToAnswer" href="#contactMe">Still having problem</a>
+                    </p>
+                </div>
+                <div class="answersHolderBox" id="PopupsOnReceive">
+                    <h3>4.Getting popups on each receive</h3>
+                    <p class="answers">
+                        Popups are required to generate the writeable stream so that file can be saved in your disk.<br>
+                        It's also working as service worker for StreamSaver API and I was lazy enough to create my own service worker(may be soon).
+                        <br><a class="linksToAnswer" href="#contactMe">Still having problem</a>
+                    </p>
+                </div>
+                <div class="answersHolderBox" id="ReceivedCorruptedFile">
+                    <h3>5.Received corrupted files</h3>
+                    <p class="answers">
+                        This can happen if the receiving is interrupted somehow try 
+                        <li>
+                            Asking the sender to send file again.
+                        </li>
+                        If this did't work then the file might not be supported by your phone!
+                        <br><a class="linksToAnswer" href="#contactMe">Still having problem</a>
+                    </p>
+                </div>
+                <div class="answersHolderBox" id="contactMe">
+                    <h2 style="color: black;">Contact</h2>
+                    <p class="answers">
+                        In case you still have the problem try contacting me
+                        <li>Email: <sobydanny@gmail class="com">sobydanny@gmail.com</sobydanny@gmail></li>
+                        <h4>About Me</h4>
+                        <p class="answers">
+                            My name is Sritabh Priyadarshi and I am currently doing B.Tech in Computer Science Branch from School Of Engineering,CUSAT
+                        </p>
+                    </p>
+                </div>
+            </div>
+        </center>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="popHeader">
+                    <div style="font-weight: 800;" id="popHeading">
+                        Error
+                    </div>
+                </div>
+                <div id="popContent">
+                    Some error message
+                </div>
+                <div id = "popFooter">
+                    <button class="closePop" onclick="closeErrorPop()">Close</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
