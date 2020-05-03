@@ -22,11 +22,14 @@
                 <div id="myName" style="margin-top: -10px;float: right; font-size: 10px;">by <span style="font-size: 18px;font-weight: 900;">SobyDamn</span></div>
             </div>
         </center>
-        <div class="helpBTN" href="help.html"><a style="text-decoration: none; color:#a8a2a2" href="help.html"><i class="material-icons">help_outline</i></a></div>
+        <div class="helpBTN">
+            <a style="text-decoration: none; color:#a8a2a2" href="#downloadLink"><i class="material-icons">file_download</i></a>
+            <a style="text-decoration: none; color:#a8a2a2" href="help.html"><i class="material-icons">help_outline</i></a>
+        </div>
         <center>
             <div id="statusBar">
                 <div id="connection">
-                    <div id="refreshBTN" onclick="refresh()"><i class="material-icons">refresh</i></div>
+                    <div type="button" id="refreshBTN" onclick="refresh()"><i class="material-icons">refresh</i></div>
                     <div id="connectionStatus">Checking Connection..</div>
                 </div>
                 <button id="receiveAllBTN" value="false" onclick="receiveAll()">
@@ -61,7 +64,8 @@
                     Some error message
                 </div>
                 <div id = "popFooter">
-                    <button class="closePop" onclick="closeErrorPop()">Close</button>
+                    <button class="popBTN" id="confirmPOP">Proceed</button>
+                    <button class="popBTN" id="closePOP" onclick="closeErrorPop()">Close</button>
                 </div>
             </div>
         </div>

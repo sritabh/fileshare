@@ -20,7 +20,7 @@ async function loadContent() {
     // code for IE6, IE5
     xhttp = new ActiveXObject("Microsoft.XMLHTTP");
   }
-  xhttp.open("GET", "http://192.168.43.1:8080", true)
+  xhttp.open("GET", "http://192.168.43.1:6942", true)
   xhttp.send();
   xhttp.onreadystatechange = async function() {
     bodyContent = document.getElementById("body").innerHTML;
@@ -34,11 +34,11 @@ async function loadContent() {
           totalFileToBeReceived = Object.keys(files).length //total files receiving
           fileListToBeReceived = files;
           for (file in files) {
-            var fileURL = "http://192.168.43.1:8080/" +file
+            var fileURL = "http://192.168.43.1:6942/" +file
             var fileSize = files[file]["file_size"]
             var fileSizeForNerd = fileSizetoReadable(fileSize);
             var currFileStatus = FileReceivedBeforeStatus(file,i); //check if file received before or not
-            outToScreenHTML +=`<div class="downloadContainer" id="downloadContaier${i}"><div class='downloader'><div class='fileDetail'>`+file+`<div class="fileSize">Size - ${fileSizeForNerd}</div></div><div class='fileBTN'><button class="saveFileBTN" id="saveFileBTN${i}" onclick="saveFiles('${file}','${i}','${fileSize}')"><i class='receiving_status' id="statusID${i}">${currFileStatus}</i></button></div></div><div class="downloadProgressBar" id="downloadProgressBar${i}"><div class="progressBar" id="progressBar${i}"></div></div></div>`;
+            outToScreenHTML +=`<div class="downloadContainer" id="downloadContaier${i}"><div class='downloader'><div class='fileDetail'>`+file+`<div class="fileSize">Size - ${fileSizeForNerd}</div></div><div class='fileBTN'><button class="saveFileBTN" id="saveFileBTN${i}" onclick="accessFile('${file}','${i}','${fileSize}')"><i class='receiving_status' id="statusID${i}">${currFileStatus}</i></button></div></div><div class="downloadProgressBar" id="downloadProgressBar${i}"><div class="progressBar" id="progressBar${i}"></div></div></div>`;
             i++;
           }
         }
@@ -54,75 +54,88 @@ async function loadContent() {
         }
       })
     }
-  };
-};
-
-async function saveFiles(file_name,id,file_size) {
-  var receiveAllBTN = document.getElementById("receiveAllBTN");
+  }
+}
+function accessFile(file_name,id,file_size) {
+  console.log(fileReceivingStatus[file_name] + " receiving status")
   if (fileReceivingStatus[file_name] == fileStatusReceiving) {
+    console.log("receiving")
     var error = "Receiving...";
     var msg = "File is already being received!";
     showPopUp(error,msg);
   }
+  else if(fileReceivingStatus[file_name] == fileStatusReceived) {
+    console.log("already receive")
+    //file is already received show confirmation pop
+    var title = "Already Received"
+    var msg = `<p style="word-wrap: break-word;">${file_name}</p>Do you want to receive this file again?`
+    var confirmBTN = document.getElementById("confirmPOP");
+    confirmBTN.style.display = "inline";
+      confirmBTN.onclick = function(){
+        //Allow Receiving file and close the pop
+        closeErrorPop();
+        saveFiles(file_name,id,file_size);
+      }
+      showPopUp(title,msg)
+  }
   else {
-    fileReceivingStatus[file_name] = fileStatusReceiving
-    var fileURL = "http://192.168.43.1:8080/" +file_name
-    let receivedData = 0
-    const fileStream = streamSaver.createWriteStream(file_name, {
-      size: file_size
-    })
-    //automatic download
-    /*if (window.WritableStream && file.body.pipeTo) {
-      console.log("hello")
-      return file.body.pipeTo(fileStream)
-          .then(() => console.log('done writing'))
-    }*/
-    //manual writing showing status on screen aswell
-    fetch(fileURL).then(async (resolve,reject)=>{
-      isReceiving = true;
-      window.writer = fileStream.getWriter()
-      const fileReader = resolve.body.getReader()
-      while (true) {
-        const {done, value} = await fileReader.read()
-        if (done) {
-          writer.close()
-          fileReceivingStatus[file_name] = fileStatusReceived
-          isReceiving = false;
-          if (receiveAllBTN.value == "true") {
-            if (receivedFile < totalFileToBeReceived-1) {
+    //just receive the file
+    saveFiles(file_name,id,file_size);
+    
+  }
+}
+async function saveFiles(file_name,id,file_size) {
+  var receiveAllBTN = document.getElementById("receiveAllBTN");
+  fileReceivingStatus[file_name] = fileStatusReceiving
+  var fileURL = "http://192.168.43.1:6942/" +file_name
+  let receivedData = 0
+  const fileStream = streamSaver.createWriteStream(file_name, {
+    size: file_size
+  })
+  fetch(fileURL).then(async (resolve,reject)=>{
+    isReceiving = true;
+    window.writer = fileStream.getWriter()
+    const fileReader = resolve.body.getReader()
+    while (true) {
+      const {done, value} = await fileReader.read()
+      if (done) {
+        writer.close()
+        fileReceivingStatus[file_name] = fileStatusReceived
+        isReceiving = false;
+        if (receiveAllBTN.value == "true") {
+          if (receivedFile < totalFileToBeReceived-1) {
+            fetchAllFiles(receivedFile);
+            break;
+          }
+          else if (receivedFile >= totalFileToBeReceived-1) {
+            if ((totalFileToBeReceived - Object.keys(fileReceivingStatus).length) > 1) {
+              receivedFile = 0;
               fetchAllFiles(receivedFile);
-              break;
             }
-            else if (receivedFile >= totalFileToBeReceived-1) {
-              if ((totalFileToBeReceived - Object.keys(fileReceivingStatus).length) > 1) {
-                receivedFile = 0;
-                fetchAllFiles(receivedFile);
-              }
-              else {
-                fetchAllFiles(receivedFile);
-              }
+            else {
+              fetchAllFiles(receivedFile);
             }
           }
-          break;
         }
-        else {
-          writer.write(value)
-          receivedData +=value.length
-        }
-        var receivedPercent = Math.round((receivedData/file_size)*100);
-        fileTransferStatus(receivedPercent,id);
+        break;
       }
-    }).catch((err)=>{
-      isReceiving = false;
-      receiveAllBTN.value = "false";
-      receiveAllBTN.innerText = "Resume"
-      console.log("err in connection "+err.message)
-      fileReceivingStatus[file_name] = fileStatusCanceled
-      var error = "Error";
-      var msg = err.message +":<br>Connection Lost<br>Try refresh button or restarting the app";
-      showPopUp(error,msg);
-    })
-  }
+      else {
+        writer.write(value)
+        receivedData +=value.length
+      }
+      var receivedPercent = Math.round((receivedData/file_size)*100);
+      fileTransferStatus(receivedPercent,id);
+    }
+  }).catch((err)=>{
+    isReceiving = false;
+    receiveAllBTN.value = "false";
+    receiveAllBTN.innerText = "Resume"
+    console.log("err in connection "+err.message)
+    fileReceivingStatus[file_name] = fileStatusCanceled
+    var error = "Error";
+    var msg = err.message +":<br>Connection Lost<br>Try refresh button or restarting the app";
+    showPopUp(error,msg);
+  })
 }
 function fileTransferStatus(progress,id) {
   var progressBar = `progressBar${id}`
@@ -164,10 +177,8 @@ function refresh() {
   }
   else {
     var receiveAllBTN = document.getElementById("receiveAllBTN");
-    if (receiveAllBTN.value != "false") {
-      receiveAllBTN.value = "false";
-      document.getElementById("receiveAllBTN").innerText = "Resume";
-    }
+    receiveAllBTN.value = "false";
+    document.getElementById("receiveAllBTN").innerText = "Receive All";
     loadContent();
     document.getElementById("connectionStatus").innerHTML = "Checking Connection.."
     document.getElementById("refreshBTN").style.animation = "spin 1s linear infinite";
@@ -177,26 +188,27 @@ function refresh() {
 
 ///clicking all buttons one by one ez...
 function receiveAll() {
+  var type = "Experimental Feature!";
+  var msg = "This button is highly experimental and will require permission like<br>-Show Pop-Ups<br>-Download Multiple Files<br>And More..<br>I would have touched this only if I knew what the above things are!";
+  var confirmBTN = document.getElementById("confirmPOP");
   var receiveAllBTN = document.getElementById("receiveAllBTN");
-  var changeValues = new Promise((res,rej)=>{
-    if (receiveAllBTN.value == "false") {
+  confirmBTN.style.display = "inline";
+  if (receiveAllBTN.value == "false") {
+    //User requesting to receive all
+    //warn him
+    confirmBTN.onclick = function(){
       receiveAllBTN.value = "true";
       document.getElementById("receiveAllBTN").innerText = "Pause";
-      var type = "Experimental Feature!"
-      var msg = "This button is highly experimental and will require permission like<br>-Show PopUps<br>-Download Multiple Files<br>And More..<br>I would have touched this only if I knew what the above things are!"
-      showPopUp(type,msg)
-    }
-    else {
-      receiveAllBTN.value = "false"
-      document.getElementById("receiveAllBTN").innerText = "Receive All";
-    }
-    res()
-  })
-  changeValues.then(()=>{
-    if (receiveAllBTN.value == "true") {
+      closeErrorPop();
       loadContent();
     }
-  })
+    showPopUp(type,msg)
+  }
+  else {
+    //User trying to pause the will pause the next receive
+    receiveAllBTN.value = "false";
+    document.getElementById("receiveAllBTN").innerText = "Resume";
+  }
 }
 //download the file by clicking on respective button
 function fetchAllFiles(id) {
@@ -301,6 +313,7 @@ function fileSizetoReadable(size) {
 function closeErrorPop() {
   var modal = document.getElementById("myModal");
   modal.style.display = "none";
+  document.getElementById("confirmPOP").style.display = "none"
 }
 function showPopUp(type,message) {
   document.getElementById("popHeading").innerHTML = type;
@@ -310,11 +323,12 @@ function showPopUp(type,message) {
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
+      document.getElementById("confirmPOP").style.display = "none"
     }
   }
 }
 function byAccident() {
   var type = "Accident??"
-  var msg = `<p style="padding-top:20px; margin-right:auto;margin-left:auto;">There are no accidents!<br>-Grand Master Oogway</p>`
+  var msg = `There are no accidents!<br>-Grand Master Oogway`
   showPopUp(type,msg);
 }

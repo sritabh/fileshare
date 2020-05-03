@@ -1,3 +1,11 @@
+@font-face {
+  font-family: openSans;
+  src: url(OpenSans-Regular.ttf);
+}
+
+*{
+  font-family: openSans;
+}
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -16,19 +24,19 @@
   /* Modal Content */
   .modal-content {
     position: relative;
-    background-image: linear-gradient(to left, rgb(58, 53, 155),rgb(25, 19, 145)); 
-    color:white;
+    background-color: #ffffff; 
+    color:black;
     margin: auto;
     padding: 0;
     width: 75%;
     max-width: 300px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    min-height: 200px;
-    border-radius: 10px;
+    min-height: 195px;
+    border-radius: 3px;
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
   }
   
   /* Add Animation */
@@ -56,33 +64,52 @@
     text-decoration: none;
     cursor: pointer;
   }
+  @font-face {
+    font-family: openSans-Bold;
+    src: url(opensans_bold.ttf);
+  }
+  @font-face {
+    font-family: openSans-SemiBold;
+    src: url(opensans_semibold.ttf);
+  }
 .popHeader {
     min-height: 30px;
     font-size: 20px;
-    padding: 5px;
+    padding-top: 15px;
     padding-left: 10px;
-    border-bottom: 0.3px solid rgba(221, 221, 221, 0.219);
+    margin-left: 10px;
+    font-weight: 900;
+    font-family: openSans-Bold;
 }
 #popHeading {
     text-align: start;
 }
 #popContent {
-    padding: 5px;
-    min-height: 100px;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 10px;
+  min-height: 100px;
+  color: rgba(51, 47, 47, 0.918)
 }
 #popFooter {
     text-align: right;
-    border-top: 0.5px solid rgba(221, 221, 221, 0.219);
-    min-height:40;
+    min-height:20px;
 }
-.closePop {
-    margin: 5px;
-    min-width: 80px;
-    color: white;
+.popBTN {
+    min-width: 70px;
+    color: rgb(25, 107, 166);;
     font-weight: 400;
-    padding: 5px;
     font-size: large;
     border-radius: 10px;
     border:none;
-    background-color: rgb(25, 107, 166);
+    background: none;
+    font-family: openSans-SemiBold;
+    margin-bottom: 15px;
+}
+#confirmPOP {
+  display: none;
+}
+#closePOP {
+  margin-right: 20px;
 }

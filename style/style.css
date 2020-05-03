@@ -219,3 +219,9 @@ div.progressBar {
    color:rgb(250, 244, 227,0.5);
    font-weight: bolder;
 }
+.questionsListNumbering {
+  margin-left: -20px;
+}
+.answerListNumbering {
+  margin-left: -20px;
+}
