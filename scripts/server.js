@@ -47,46 +47,52 @@ async function loadContent() {
       getFiles.then((all_files)=>{
         document.getElementById("body").innerHTML = all_files;
         var receiveAllBTN = document.getElementById("receiveAllBTN");
-        if (!isReceiving) {
-          if (receiveAllBTN.value == "true") {
-            var downloadBTNS = document.getElementsByClassName("saveFileBTN");
-            for (var i = 0;i < downloadBTNS.length;i++) {
-              downloadBTNS[i].style.animation = "shadow-pulse 1s infinite";
-            }
-            fetchAllFiles(0); //start from beginning make sure all files exists
+        if (receiveAllBTN.value == "true") {
+          var downloadBTNS = document.getElementsByClassName("saveFileBTN");
+          for (var i = 0;i < downloadBTNS.length;i++) {
+            downloadBTNS[i].style.animation = "shadow-pulse 1s infinite";
           }
+          fetchAllFiles(0); //start from beginning make sure all files exists
         }
       })
     }
   }
 }
 function accessFile(file_name,id,file_size) {
-  console.log(fileReceivingStatus[file_name] + " receiving status")
-  if (fileReceivingStatus[file_name] == fileStatusReceiving) {
-    console.log("receiving")
-    var error = "Receiving...";
-    var msg = "File is already being received!";
-    showPopUp(error,msg);
-  }
-  else if(fileReceivingStatus[file_name] == fileStatusReceived) {
-    console.log("already receive")
-    //file is already received show confirmation pop
-    var title = "Already Received"
-    var msg = `<p style="word-wrap: break-word;">${file_name}</p>Do you want to receive this file again?`
-    var confirmBTN = document.getElementById("confirmPOP");
-    confirmBTN.style.display = "inline";
-      confirmBTN.onclick = function(){
-        //Allow Receiving file and close the pop
-        closeErrorPop();
-        saveFiles(file_name,id,file_size);
-      }
-      showPopUp(title,msg)
+  if (!isReceiving) {
+    if (fileReceivingStatus[file_name] == fileStatusReceiving) {
+      console.log("receiving")
+      var error = "Receiving...";
+      var msg = "File is already being received!";
+      showPopUp(error,msg);
+    }
+    else if(fileReceivingStatus[file_name] == fileStatusReceived) {
+      console.log("already receive")
+      //file is already received show confirmation pop
+      var title = "Already Received"
+      var msg = `<p style="word-wrap: break-word;">${file_name}</p>Do you want to receive this file again?`
+      var confirmBTN = document.getElementById("confirmPOP");
+      confirmBTN.style.display = "inline";
+        confirmBTN.onclick = function(){
+          //Allow Receiving file and close the pop
+          closeErrorPop();
+          saveFiles(file_name,id,file_size);
+        }
+        showPopUp(title,msg)
+    }
+    else {
+      //just receive the file
+      saveFiles(file_name,id,file_size);
+      
+    }
   }
   else {
-    //just receive the file
-    saveFiles(file_name,id,file_size);
-    
+    //Ask user to wait until the current transfer is finished
+    var title = "Receiving!"
+    var msg="Can't request multiple files at once.<br><i>Just for the sake of efficiency</i>"
+    showPopUp(title,msg)
   }
+  
 }
 async function saveFiles(file_name,id,file_size) {
   var receiveAllBTN = document.getElementById("receiveAllBTN");
@@ -104,12 +110,11 @@ async function saveFiles(file_name,id,file_size) {
       const {done, value} = await fileReader.read()
       if (done) {
         writer.close()
-        fileReceivingStatus[file_name] = fileStatusReceived
+        fileReceivingStatus[file_name] = fileStatusReceived;
         isReceiving = false;
         if (receiveAllBTN.value == "true") {
           if (receivedFile < totalFileToBeReceived-1) {
             fetchAllFiles(receivedFile);
-            break;
           }
           else if (receivedFile >= totalFileToBeReceived-1) {
             if ((totalFileToBeReceived - Object.keys(fileReceivingStatus).length) > 1) {
@@ -202,10 +207,18 @@ function receiveAll() {
     //User requesting to receive all
     //warn him
     confirmBTN.onclick = function(){
-      receiveAllBTN.value = "true";
-      document.getElementById("receiveAllBTN").innerText = "Pause";
-      closeErrorPop();
-      loadContent();
+      if (isReceiving) {
+        closeErrorPop();
+        var title = "Error"
+        var msg="Looks like one file is already being transfered kindly wait for it to finish."
+        showPopUp(title,msg)
+      }
+      else if(!isReceiving) {
+        receiveAllBTN.value = "true";
+        document.getElementById("receiveAllBTN").innerText = "Pause";
+        closeErrorPop();
+        loadContent();
+      }
     }
     showPopUp(type,msg)
   }
@@ -223,8 +236,7 @@ function fetchAllFiles(id) {
   var fileName = Object.keys(fileListToBeReceived)[id]
   var saveBTNId = `saveFileBTN${id}`;
   var fileClickedBefore = fileName in fileReceivingStatus
-  setTimeout(()=>{
-    var receiveAllBTN = document.getElementById("receiveAllBTN");
+  var receiveAllBTN = document.getElementById("receiveAllBTN");
     if (!isReceiving) {
       if (receiveAllBTN.value == "true") {
         if (id < totalFileToBeReceived) {
@@ -232,13 +244,18 @@ function fetchAllFiles(id) {
             //download if not touched before
             //doesnt exists in receiving object
             receivedFile++;
-            document.getElementById(saveBTNId).click();
+            setTimeout(()=>{
+              document.getElementById(saveBTNId).click();
+            },3000)
           }
           else if (fileReceivingStatus[fileName] != fileStatusReceived || fileReceivingStatus[fileName] == fileStatusCanceled) {
             receivedFile++;
-            document.getElementById(saveBTNId).click();
+            setTimeout(()=>{
+              document.getElementById(saveBTNId).click();
+            },3000)
           }
           else if (fileReceivingStatus[fileName] == fileStatusReceived) {
+            //file received already
             receivedFile++;
             var downloadContainer = `downloadContaier${id}`
             document.getElementById(downloadContainer).style.boxShadow ="none";
@@ -250,10 +267,13 @@ function fetchAllFiles(id) {
           var receiveAllBTN = document.getElementById("receiveAllBTN");
           receiveAllBTN.value = "false";
           document.getElementById("receiveAllBTN").innerText = "Done!";
+          var downloadBTNS = document.getElementsByClassName("saveFileBTN");
+          for (var i = 0;i < downloadBTNS.length;i++) {
+            downloadBTNS[i].style.animation = "none";
+          }
         }
       }
     }
-  },3000)
 }
 //connection status
 function checkConnectionStatus(state,status) {
