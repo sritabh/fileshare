@@ -362,3 +362,6 @@ function byAccident() {
   var msg = `There are no accidents!<br>-Grand Master Oogway`
   showPopUp(type,msg);
 }
+function downloadApp(){
+  window.open("https://sobydamn.blogspot.com/2020/05/fileshare-app.html")
+}
