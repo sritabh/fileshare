@@ -56,12 +56,12 @@ div.downloader {
   }
   
   div.downloadContainer {
-    box-shadow: 1px 3px 8px black;
+    box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.644);
     margin-bottom: 20px;
     border-radius: 3px;
     padding: 5px;
     padding-bottom: 5px;
-    background-color: rgb(224, 213, 213);
+    background-color: rgb(230, 232, 231);
   }
   @keyframes shadow-pulse
 {
@@ -197,7 +197,7 @@ div.progressBar {
    right:0;
    margin: 15px;
    margin-top: 30px;
-   color:rgb(250, 244, 227,0.5);
+   color:rgb(230, 232, 231);
    font-weight: bolder;
 }
 .downloadAppBTN {
