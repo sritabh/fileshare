@@ -193,7 +193,7 @@ function refresh() {
 ///clicking all buttons one by one ez...
 function receiveAll() {
   var type = "Experimental Feature!";
-  var msg = "This button is highly experimental and will require permission like<br>-Show Pop-Ups<br>-Download Multiple Files<br>And More..<br>I would have touched this only if I knew what the above things are!";
+  var msg = "This button is experimental and will require permission like<li>Allow Pop-Ups</li><li>Download Multiple Files</li><i>Note: Give permission when asked!</i>";
   var confirmBTN = document.getElementById("confirmPOP");
   var receiveAllBTN = document.getElementById("receiveAllBTN");
   var downloadBTNS = document.getElementsByClassName("saveFileBTN");

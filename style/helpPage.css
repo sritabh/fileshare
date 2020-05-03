@@ -35,3 +35,19 @@
     overflow-y: scroll;
     max-height: 83%;
   }
+
+  .saveFileBTN {
+    background-color: #2F0743;
+    background-image: linear-gradient(to right, #2F0743,#41295a);
+    border-radius: 50%;
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    margin: auto;
+    height: 35px;
+    width: 35px;
+    cursor: pointer;
+    outline: none;
+  }

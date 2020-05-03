@@ -106,6 +106,7 @@
     background: none;
     font-family: openSans-SemiBold;
     margin-bottom: 15px;
+    outline: none;
 }
 #confirmPOP {
   display: none;
