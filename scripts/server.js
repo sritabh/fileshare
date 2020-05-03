@@ -49,6 +49,10 @@ async function loadContent() {
         var receiveAllBTN = document.getElementById("receiveAllBTN");
         if (!isReceiving) {
           if (receiveAllBTN.value == "true") {
+            var downloadBTNS = document.getElementsByClassName("saveFileBTN");
+            for (var i = 0;i < downloadBTNS.length;i++) {
+              downloadBTNS[i].style.animation = "shadow-pulse 1s infinite";
+            }
             fetchAllFiles(0); //start from beginning make sure all files exists
           }
         }
@@ -192,6 +196,7 @@ function receiveAll() {
   var msg = "This button is highly experimental and will require permission like<br>-Show Pop-Ups<br>-Download Multiple Files<br>And More..<br>I would have touched this only if I knew what the above things are!";
   var confirmBTN = document.getElementById("confirmPOP");
   var receiveAllBTN = document.getElementById("receiveAllBTN");
+  var downloadBTNS = document.getElementsByClassName("saveFileBTN");
   confirmBTN.style.display = "inline";
   if (receiveAllBTN.value == "false") {
     //User requesting to receive all
@@ -208,6 +213,9 @@ function receiveAll() {
     //User trying to pause the will pause the next receive
     receiveAllBTN.value = "false";
     document.getElementById("receiveAllBTN").innerText = "Resume";
+    for (var i = 0;i < downloadBTNS.length;i++) {
+      downloadBTNS[i].style.animation = "none";
+    }
   }
 }
 //download the file by clicking on respective button
@@ -215,35 +223,37 @@ function fetchAllFiles(id) {
   var fileName = Object.keys(fileListToBeReceived)[id]
   var saveBTNId = `saveFileBTN${id}`;
   var fileClickedBefore = fileName in fileReceivingStatus
-  var receiveAllBTN = document.getElementById("receiveAllBTN");
-  if (!isReceiving) {
-    if (receiveAllBTN.value == "true") {
-      if (id < totalFileToBeReceived) {
-        if (!fileClickedBefore) {
-          //download if not touched before
-          //doesnt exists in receiving object
-          receivedFile++;
-          document.getElementById(saveBTNId).click();
+  setTimeout(()=>{
+    var receiveAllBTN = document.getElementById("receiveAllBTN");
+    if (!isReceiving) {
+      if (receiveAllBTN.value == "true") {
+        if (id < totalFileToBeReceived) {
+          if (!fileClickedBefore) {
+            //download if not touched before
+            //doesnt exists in receiving object
+            receivedFile++;
+            document.getElementById(saveBTNId).click();
+          }
+          else if (fileReceivingStatus[fileName] != fileStatusReceived || fileReceivingStatus[fileName] == fileStatusCanceled) {
+            receivedFile++;
+            document.getElementById(saveBTNId).click();
+          }
+          else if (fileReceivingStatus[fileName] == fileStatusReceived) {
+            receivedFile++;
+            var downloadContainer = `downloadContaier${id}`
+            document.getElementById(downloadContainer).style.boxShadow ="none";
+            fetchAllFiles(receivedFile) //jump to next file
+          }
         }
-        else if (fileReceivingStatus[fileName] != fileStatusReceived || fileReceivingStatus[fileName] == fileStatusCanceled) {
-          receivedFile++;
-          document.getElementById(saveBTNId).click();
+        else {
+          //all file received change the resume button value
+          var receiveAllBTN = document.getElementById("receiveAllBTN");
+          receiveAllBTN.value = "false";
+          document.getElementById("receiveAllBTN").innerText = "Done!";
         }
-        else if (fileReceivingStatus[fileName] == fileStatusReceived) {
-          receivedFile++;
-          var downloadContainer = `downloadContaier${id}`
-          document.getElementById(downloadContainer).style.boxShadow ="none";
-          fetchAllFiles(receivedFile) //jump to next file
-        }
-      }
-      else {
-        //all file received change the resume button value
-        var receiveAllBTN = document.getElementById("receiveAllBTN");
-        receiveAllBTN.value = "false";
-        document.getElementById("receiveAllBTN").innerText = "Done!";
       }
     }
-  }
+  },3000)
 }
 //connection status
 function checkConnectionStatus(state,status) {
