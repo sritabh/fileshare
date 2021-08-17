@@ -27,7 +27,7 @@ function showMoreAboutNew(element){
 
 const appName = "FileShare_v1.0.0.apk"
 const appURL = `https://github.com/SobyDamn/fileshare/releases/download/1.1.0/FileShare_v1.1.0.apk`
-function blockDownloadApp(){
+function DownloadApp(){
     const a = document.createElement('a')
     a.href = appURL
     document.body.appendChild(a)
