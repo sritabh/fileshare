@@ -1,79 +1,145 @@
 <html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FileShare</title>
+    <title>FileShare 1.1.0 - Early Access!</title>
     <head>
         <link rel="icon" href="style/share_icon.png" type="image/icon type">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="style/Icons/google-fonts.css">
+        <link rel="stylesheet" href="style/header-footer.css">
+        <link rel="stylesheet" href="style/fonts.css">
         <link rel="stylesheet" href="style/style.css">
         <link rel="stylesheet" href="style/popup.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/web-streams-polyfill@2.0.2/dist/ponyfill.min.js"></script>
-        <!-- includes blob.stream() polyfill -->
-        <script src="https://cdn.jsdelivr.net/gh/eligrey/Blob.js/Blob.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js"></script>
-        <script src="scripts/server.js"></script>
-        <script>
-            streamSaver.mitm = 'https://sobydamn.github.io/FileShare-ServiceWorker/mitm.html'
-        </script>
+        <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+        <script src="scripts/scripts.js"></script>
     </head>
-    <body onload="loadContent()">
-        <center>
-            <div class="credits" style="width: 60%;max-width: 300px; padding-bottom: 30px;">
-                <div id="appName" style="font-size: 40px;font-weight: 900;">FileShare</div>
-                <div id="myName" style="margin-top: -10px;float: right; font-size: 10px;">by <span style="font-size: 18px;font-weight: 900;">SobyDamn</span></div>
-            </div>
-        </center>
-        <div class="helpBTN">
-            <a style="text-decoration: none; color:rgb(230, 232, 231)" href="" target="_blank"><i class="material-icons">file_download</i></a>
-            <a style="text-decoration: none; color:rgb(230, 232, 231)" href="help.html"><i class="material-icons">help_outline</i></a>
-        </div>
-        <center>
-            <div id="statusBar">
-                <div id="connection">
-                    <div type="button" id="refreshBTN" onclick="refresh()"><i class="material-icons">refresh</i></div>
-                    <div id="connectionStatus">Checking Connection..</div>
+    <body>
+        <div id="header">
+            <center>
+                <div class="credits" style="width: 60%;max-width: 300px; padding-bottom: 30px;">
+                    <div id="appName"><a href="/index.html" style="text-decoration: none;color: white;">FileShare</a></div>
+                    <div id="devName" style="margin-top: -10px;float: right; font-size: 10px;">by <a href="https://github.com/SobyDamn" style="text-decoration:none;color:white;font-size: 18px;font-weight: 900;">SobyDamn</a></div>
                 </div>
-                <button id="receiveAllBTN" value="false" onclick="receiveAll()">
-                    Receive All
-                </button>
+            </center>
+            <div class="helpBTN">
+                <a style="text-decoration: none; color:rgb(230, 232, 231)" href="https://sobydamn.github.io/fileshare/" target="_blank"><i class="material-icons">file_download</i></a>
+                <a style="text-decoration: none; color:rgb(230, 232, 231)" href="./help"><i class="material-icons">help_outline</i></a>
             </div>
-        </center>
-        <p style="font-size: 30px; color:wheat;text-align: center; margin-bottom: -30px;" id="heading"></p>
-        <center>
-            <div id="body">
-                <h3>Hey!!</h3>
-                Looks like no connection is available!<br>
-                In case you're trying to connect try the refresh button <div onclick="refresh()"><i style="color:#a8a2a2" class="material-icons">refresh</i></div> 
-                or try visiting help page <sub><a style="text-decoration: none; color:#a8a2a2" href="help.html"><i class="material-icons">help_outline</i></a></sub>
-                or If you came here <span onclick="byAccident()"><b>by accident</b></span> or just to check  then you might give it a try aswell!
+        </div>
+        <div class="app-release-details">
+            <div class="image-container">
+                <img src="resources/app_icon.png"/>
+            </div>
+        </div>
+        <div class="whats-new">
+            <h1 style="margin-bottom: 0;">What's New in v1.1.0</h1>
+            <span style="font-size: smaller;">published on <b>dd/mm/yyyy</b></span>
+            <div>
+                <section class="whats-new-content">
+                    <h4>-Files can be shared in offline mode</h4>
+                    Even though in the previous version the files were transferred locally, 
+                    connection to internet was still required in order to to the service-worker so that client can know the details about the file transfer.
+                    In new update options are available to choose between using service worker i.e. using online-mode or do transfer in complete offline mode.<br>
+                    In both modes files are transferred locally, the difference being details of file transferred can be displayed on the page in online-mode.
+                    <br>
+                    <a href = "/help/how-to-use#online-offline-modes" class="external-links">Check about offline and online modes</a>
+                </section>
+                <section class="whats-new-content">
+                    <h4>-Removed mandotory service worker(now optional).</h4>
+                    This will allow files to be transferred without pinging the service worker.
+                </section>
+                <section class="whats-new-content">
+                    <h4>-Option to receive files in offline or online mode.</h4>
+                    In offline-mode the file will be saved directly and in online-mode file transfer details will be visible on the browser.
+                    <br>
+                    NOTE: File will be received locally and not over the internet.
+                    <br>
+                    <a href = "/help/how-to-use#online-offline-modes" class="external-links">Know more!</a>
+                </section>
+                <section class="whats-new-content">
+                    <h4>-App theme improved(Dark Theme)</h4>
+                </section>
+                <section class="whats-new-content">
+                    <h4>-Multiple receiver can connect to server and request files at once.</h4>
+                    This will allow multiple users to connect and receive file at the same time. This will surely reduce the transfer speed for the receiver.
+                </section>
+                <section class="whats-new-content">
+                    <h4>-Multiple files can be received at once</h4>
+                    Now receiver can request multiple files in offline-mode.
+                </section>
+                <section class="whats-new-content">
+                    <h4>-Files can also be shared if devices are on same network</h4>
+                    In the previous version the receiver was required to connect to the wifi network created by sender i.e. via hotspot, In the new receiver can sender can transfer the files being on the same network i.e. connected with same wifi network.
+                </section>
+                <section class="whats-new-content">
+                    <h4>-Push notification via FCM</h4>
+                    New updates notification can be sent directly to user's door.
+                </section>
+            </div>
+            <div id="app_download_button">
+                <a onclick="DownloadApp()" download>Download</a>
                 <br>
-                <button class="downloadAppBTN">
-                    <del>Download App!</del>
-                </button>
-                <p style="color: rgb(192, 64, 64);">
-                    <b>The app is taken down by the developer.
-                        <br>The new update is on the way.
-                        <br>
-                        In case you have further queries <a href="help.html#contactMe">Contact Developer</a>
-                    </b>
-                </p>
+                <br>
+                <i>
+                    <span style="font-family: roboto-regular;padding-top: 4px;font-size: smaller;color: rgb(168, 168, 168);">*you have to enable download from uknown source in order to install the app in your android device*</span>
+                </i>
             </div>
-        </center>
+            <h1>About</h1>
+            <p>
+                This Android application allows user to share large files to any other system over local network where receiver doesn't require any app to receive.The receiver can use any web browse(currently supporting most of them) and go to the receiving url to receive the file and save them offline. The file transfer happens locally and no Internet connection is required for v1.1.0 or more.
+                This app is made keeping the problem in mind that how time taking it's sometimes to plug the USB cable to transfer the files to the laptop/PC and if we have a broken USB cable like in my case it's more irritating.
+                It's also annoying when we have to share large files with friends and had to decide which app to use as traditional file sharing apps requires the user to use the same application to recieve the files, this app can be helpful in that scenario aswell.
+            </p>
+            <br><br>
+            <p>
+                <a class="external-links" href="/help/how-to-use/">Check how to use the app.</a>
+                <br><br>
+                <a class="external-links" target="_blank" href="https://sobydamn.blogspot.com/2020/05/fileshare-app.html">Read about first release</a>
+            </p>
+            <br>
+            <section>
+                <h1>Feedback</h1>
+                Feedbacks are always appreciated for improving the project, if you encounter any bug or want to request any feture send a feedback.
+                <br>
+                <a href="mailto:sobydanny@gmail.com?Subject=Feedback%20for%20project%20FileShare" class="external-links">Send Feedback</a>
+            </section>
+            <br><br>
+            <h1>
+                About Dev
+            </h1>
+            <p>
+                My name is Sritabh Priyadarshi aka SobyDamn and I am currently pursuing B.Tech in Computer Science and Engineering(2019-2023) Branch from School Of Engineering,CUSAT
+                <h3>Connect with me</h3>
+                <a class="external-links" href="http://linkedin.com/in/sobydamn">LinkedIn</a>
+                <br>
+                <a class="external-links" href="https://github.com/SobyDamn/">GitHub</a>
+            </p>
+        </div>
+        <div class="footer">
+            <p><a class="external-links" target="_blank" href="https://github.com/SobyDamn/fileshare" style="text-decoration: none; color: white;">SobyDamn</a> <i style="vertical-align: middle; font-size: large;" class="material-icons">copyright</i>2021</p>
+        </div>
         <!-- The Modal -->
         <div id="myModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="popHeader">
                     <div style="font-weight: 800;" id="popHeading">
-                        Error
+                        Download Started!
                     </div>
                 </div>
                 <div id="popContent">
-                    Some error message
+                    Be the first to know about any future updates regarding the app directly in your mail box.
+                    <div id="reg-user">
+                        <label>Email:</label>
+                        <br>
+                        <input id="joinUserEmail"/>
+                    </div>
+                    <div id="popupStatus" style="margin-bottom: 15px; color: A0204C;font-weight: 500;">
+                    </div>
                 </div>
                 <div id = "popFooter">
-                    <button class="popBTN" id="confirmPOP">Proceed</button>
-                    <button class="popBTN" id="closePOP" onclick="closeErrorPop()">Close</button>
+                    <button onclick="joinFileShare(this)" class="popBTN" id="confirmPOP">I'm in!</button>
+                    <button onclick="closePop()" class="popBTN" id="closePOP" onclick="closeErrorPop()">Close</button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,135 @@
+body{
+    cursor: default;
+    width: 100%;
+    margin: 0;
+}
+.credits {
+    text-align: center;
+    vertical-align: top;
+    margin-bottom: -30px;
+    color: white;
+    padding-bottom: 10px;
+    font-family: openSans-bold;
+  }
+#header{
+    box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.185);
+    background-color: #23103A;
+    width: 100%;
+    display: block;
+    height: 12%;
+    margin-bottom: 20px;
+    padding-top: 20px;
+}
+  #appName {
+    font-size: 40px;
+    font-weight: 900;
+  }
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: none; 
+  }
+    
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+.footer {
+    text-align: center;
+    box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.185);
+    background-color: #23103A;
+    color:white;
+    padding: 1px;
+    margin: 0;
+    font-family: opensans-bold;
+}
+.helpBTN {
+    position:absolute;
+    top:0;
+    right:0;
+    margin: 15px;
+    margin-top: 30px;
+    color:rgb(230, 232, 231);
+    font-weight: bolder;
+}
+.downloadAppBTN {
+    outline: none;
+    font-size: 15px;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 40px;
+    background-color: #41295a;
+}
+.backBTN {
+    position:absolute;
+    top:0;
+    left:0;
+    margin: 15px;
+    margin-top: 30px;
+    color:rgb(250, 244, 227,0.5);
+    font-weight: bolder;
+}
+@media only screen and (max-width:1200px) {
+    #elements-container {
+      width: 65%;
+      max-width: 500px;
+    }
+    #view-helper-text{
+      display: none;
+    }
+  }
+  @media only screen and (max-width:660px) {
+    /*
+    Mobile view
+    */
+    #elements-container {
+      width: 65%;
+    }
+  }
+  @media only screen and (max-width:450px) {
+    /*
+    Mobile view
+    */
+    .image-container{
+      width: 60%;
+    }
+    #elements-container {
+      width: 95%;
+    }
+    #appName {
+      font-size: 30px;
+      font-weight: 900;
+    }
+  }
+  @media only screen and (max-width:290px){
+    #appName {
+      font-size: 28px;
+      font-weight: 900;
+    }
+    #devName {
+      display: none;
+    }
+  }
+  @media only screen and (max-width:250px) {
+    /*
+    Mobile view
+    */
+    #appName {
+      font-size: 20px;
+      font-weight: 900;
+    }
+    #view-helper-text{
+      display: block;
+    }
+  }

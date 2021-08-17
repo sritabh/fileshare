@@ -1,227 +1,120 @@
-@font-face {
-  font-family: openSans;
-  src: url(OpenSans-Regular.ttf);
-}
-*{
-  font-family: openSans;
-}
-.credits {
-  text-align: center;
-  vertical-align: top;
-  margin-bottom: -30px;
-  color: azure;
-  padding-bottom: 10px;
-}
 body {
-  background-image: linear-gradient(to left, rgb(58, 53, 155),rgb(25, 19, 145)); 
+  /*background-image: #282D4F linear-gradient(to left, rgb(58, 53, 155),rgb(25, 19, 145));*/
+  background-color: white;
+  background-repeat: unset;
+  cursor: default;
+  width: 100%;
+  margin: 0;
+  color: #424242;
+  font-family: roboto-light !important;
 }
-#body {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin:2px;
-    padding: 10px;
-    border: 1px solid rgb(100, 100, 100);
-    border-radius: 10px;
-    min-height: 300px;
-    max-width: 500px;
-    text-align: center;
-    background-color: white;
-    font-size: 15px;
-    overflow-y: scroll;
-    max-height: 80%;
-  }
-  ::-webkit-scrollbar {
-    width: 2px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: none; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
-div.downloader {
-    text-align: left;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  div.downloadContainer {
-    box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.644);
-    margin-bottom: 20px;
-    border-radius: 3px;
-    padding: 5px;
-    padding-bottom: 5px;
-    background-color: rgb(230, 232, 231);
-  }
-  @keyframes shadow-pulse
-{
-  0% {
-    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
-  }
-  100% {
-    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0);
-  }
-}
-  h2 {
-      text-align: center;
-      color: whitesmoke;
-      font-size:30px;
-  }
-#saved {
-  font-size: 15px;
-  color: rgb(100, 100, 0);
-  margin-top: -50px;
-  font-weight: bolder;
-}
-#icons {
-  color: white;
-}
-.receiving_status {
-  font-size: 10px;
-  color: white;
-  font-weight: bolder;
-}
-.fileDetail{
-  width: 75%;
-  word-wrap: break-word;
-  display: inline-block;
-  min-height: 40px;
-}
-.fileBTN {
-  width: 20%;
-  border-left: 1px solid rgb(184, 182, 182);
-  display: flex;
+
+.app-release-details{
   align-items: center;
+  text-align: center;
+  display: flex;
   justify-content: center;
+  flex-direction: column;
 }
-.saveFileBTN {
-  background-color: #2F0743;
-  background-image: linear-gradient(to right, #2F0743,#41295a);
-  border-radius: 50%;
-  border: none;
-  color: white;
-  padding: 5px;
+.image-container{
+  width: 30%;
+  height: auto;
+  display: inline;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.image-container img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.whats-new{
+  padding: 50px;
+}
+#app_download_button{
+  padding-top: 40px;
   text-align: center;
+}
+#app_download_button a{
+  box-shadow: 1px 0px 10px rgba(155, 155, 155, 0.11);
   text-decoration: none;
-  margin: auto;
-  height: 35px;
-  width: 35px;
-  cursor: pointer;
-  outline: none;
-}
-div.downloadProgressBar {
-  
-  border-radius: 10px;
-  height: 6px;
-  background-color: #ddd;
-  display: none;
-}
-div.progressBar {
-  border-radius: 10px;
-  height: 6px;
-  width: 1%;
-  background-color: rgb(55, 186, 230);
-  padding-right: 10px;
-  display: none;
-}
-#statusBar {
-  margin: 25px;
-  display: flex;
-  max-width: 500px;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 25px;
-  padding: 2px;
-}
-#connection{
-  display: flex;
-}
-#refreshBTN {
-  background: none;
-  color: aliceblue;
-  border-radius: 50%;
-  height: 25px;
-  width: 25px;
-  font-size: large;
-  text-align: center;
-  margin-right: 5px;
-  font-weight: 900;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 1s linear infinite;
-}
-
-#receiveAllBTN {
-  border: none;
+  color: white;
+  font-family: roboto-bold;
+  padding: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 5px;
-  background-color: #2F0743;
-  color: white;
-  padding: 5px;
-  font-weight: bolder;
-  min-width: 90px;
-  display: none;
-}
-#receiveAllBTN:hover {
-  background-color: #41295a;
-}
-#refreshBTN:hover {
-  border:0.5px solid #2F0743;
-  animation: shadow-pulse 1s infinite;
-  -webkit-animation: shadow-pulse 1s infinite;
-}
-#connectionStatus {
-  color: white;
-  font-weight: bolder;
-}
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
+  background-color: #A0204C;
+  font-size: 20px;
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
-.helpBTN {
-  position:absolute;
-   top:0;
-   right:0;
-   margin: 15px;
-   margin-top: 30px;
-   color:rgb(230, 232, 231);
-   font-weight: bolder;
+#app_download_button a:hover{
+  background-color: #810d36;
+  box-shadow: 1px 0px 10px rgba(155, 155, 155, 0.664);
 }
-.downloadAppBTN {
-  outline: none;
-  font-size: 15px;
-  padding: 10px;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  margin: 40px;
-  background-color: #41295a;
+.external-links{
+  text-decoration: underline;
+  color: #A0204C;
+  font-family: roboto-bold;
 }
-.backBTN {
-  position:absolute;
-   top:0;
-   left:0;
-   margin: 15px;
-   margin-top: 30px;
-   color:rgb(250, 244, 227,0.5);
-   font-weight: bolder;
+.external-links:hover{
+  text-decoration: underline;
+  color: #810d36;
 }
-.questionsListNumbering {
-  margin-left: -20px;
+@media only screen and (max-width:1200px) {
+  #elements-container {
+    width: 65%;
+    max-width: 500px;
+  }
+  #view-helper-text{
+    display: none;
+  }
 }
-.answerListNumbering {
-  margin-left: -20px;
+@media only screen and (max-width:660px) {
+  /*
+  Mobile view
+  */
+  .whats-new{
+    padding: 20px;
+  }
+  #elements-container {
+    width: 65%;
+  }
+}
+@media only screen and (max-width:450px) {
+  /*
+  Mobile view
+  */
+  .image-container{
+    width: 60%;
+  }
+  #elements-container {
+    width: 95%;
+  }
+  #appName {
+    font-size: 30px;
+    font-weight: 900;
+  }
+}
+@media only screen and (max-width:290px){
+  #appName {
+    font-size: 28px;
+    font-weight: 900;
+  }
+  #devName {
+    display: none;
+  }
+}
+@media only screen and (max-width:250px) {
+  /*
+  Mobile view
+  */
+  #appName {
+    font-size: 20px;
+    font-weight: 900;
+  }
+  #view-helper-text{
+    display: block;
+  }
 }

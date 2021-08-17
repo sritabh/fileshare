@@ -1,0 +1,98 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileShare - Help</title>
+    <head>
+        <link rel="icon" href="/style/share_icon.png" type="image/icon type">
+        <link rel="stylesheet" href="/style/Icons/google-fonts.css">
+        <link rel="stylesheet" href="/style/header-footer.css">
+        <link rel="stylesheet" href="/style/fonts.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="/scripts/scripts.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <center>
+                <div class="credits" style="width: 60%;max-width: 300px; padding-bottom: 30px;">
+                    <div id="appName"><a href="/index.html" style="text-decoration: none;color: white;">FileShare</a></div>
+                    <div id="devName" style="margin-top: -10px;float: right; font-size: 10px;">by <a href="https://github.com/SobyDamn" style="text-decoration:none;color:white;font-size: 18px;font-weight: 900;">SobyDamn</a></div>
+                </div>
+            </center>
+            <div class="helpBTN">
+                <a style="text-decoration: none; color:rgb(230, 232, 231)" href="https://sobydamn.github.io/fileshare/" target="_blank"><i class="material-icons">file_download</i></a>
+                <a style="text-decoration: none; color:rgb(230, 232, 231)" href="/help"><i class="material-icons">help_outline</i></a>
+            </div>
+        </div>
+        <div class="list-container-area">
+            <h1>HELP</h1>
+            <div class="list-container">
+                <li onclick="showMoreAboutNew(this)">How to use the App?
+                    <i class="material-icons">keyboard_arrow_right</i>
+                    <p>
+                        <a href="/help/how-to-use/" class="external-links">Check here!</a> in details how to use the app.
+                    </p>
+                </li>
+                <li onclick="showMoreAboutNew(this)">File not saved but shown received
+                    <i class="material-icons">keyboard_arrow_right</i>
+                    <p>
+                        This happens when the popup permission is blocked or u had interrupted the process that closes the permission to write the file on your disk ine <b>online-mode</b>.
+                        <br>
+                        To Solve this try below methods
+                        <br>
+                        1.Try enabling popups or remove popup blocker from your browser.
+                        <br>
+                        2.Hard refresh the page or open the site in another window or browser.
+                        <br>
+                        3.Use offline-mode to receive files
+                    </p>
+                </li>
+                <li onclick="showMoreAboutNew(this)">Not able to connect
+                    <i class="material-icons">keyboard_arrow_right</i>
+                    <p>
+                        Make sure that both the sender and receiver is on same network.<br>
+                        <a href="/help/how-to-use/#on-same-network" class="external-links">Check here</a> how to receive the files correctly.
+                    </p>
+                </li>
+                <li onclick="showMoreAboutNew(this)">Getting popups on each receive
+                    <i class="material-icons">keyboard_arrow_right</i>
+                    <p>
+                        This can happen if the files are being received in <b>online-mode</b>, as the browser is trying to ping service worker with each file request.<br>
+                        The pinging the service worker happens using <u>iframe</u> hence the popups.<br>
+                        You can try using <a href="/help/how-to-use/#online-offline-modes" class="external-links">offline-mode</a>
+                    </p>
+                </li>
+                <li onclick="showMoreAboutNew(this)">Received corrupted files
+                    <i class="material-icons">keyboard_arrow_right</i>
+                    <p>
+                        This can happen if the receiving is interrupted somehow try
+                        <br>
+                        1.Asking the sender to send file again.
+                        <br>
+                        2.If above did't work then the file might not be supported by your phone!
+                    </p>
+                </li>
+                <li onclick="showMoreAboutNew(this)">Notification visible even after closing app
+                    <i class="material-icons">keyboard_arrow_right</i>
+                    <p>
+                        This can happen if the app is killed in the background or the app has crashed, to solve this<br>
+                        Open the app through the notification and the close it again, this will close the app properly.
+                    </p>
+                </li>
+            </div>
+        </div>
+        <div class="list-container-area">
+            <h1>Contact Dev</h1>
+            <p>
+                In case you still have some question to ask or having any problem contact me on the below given email.
+                <br>
+                Email: sobydanny@gmail.com
+                <br>
+                Or, you can send a feedback here 
+                <br>
+                <a href="mailto:sobydanny@gmail.com?Subject=Feedback%20for%20project%20FileShare" class="external-links">Send Feedback</a>
+            </p>
+        </div>
+        <div class="footer">
+            <p><a class="external-links" href="https://github.com/SobyDamn/fileshare" style="text-decoration: none; color: white;">SobyDamn</a> <i style="vertical-align: middle; font-size: large;" class="material-icons">copyright</i>2021</p>
+        </div>
+    </body>
+</html>

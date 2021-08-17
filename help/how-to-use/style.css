@@ -1,0 +1,72 @@
+body {
+    color: #424242 !important;
+}
+.How-to-content{
+    font-family: roboto-regular !important;
+    margin: 20px;
+}
+.external-links{
+    text-decoration: underline;
+    color: #A0204C;
+    font-family: roboto-bold;
+}
+.external-links:hover{
+    text-decoration: underline;
+    color: #810d36;
+}
+.helper-image-container{
+    width: 20%;
+    margin: 20px;
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 5px;
+}
+.helper-image-container img{
+    height: auto;
+    width: 100%;
+    object-fit: contain;
+}
+.helper-image-container2 {
+    width: 50%;
+    margin: 20px;
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 5px;
+}
+.helper-image-container2 img{
+    height: auto;
+    width: 100%;
+    object-fit: contain;
+}
+.How-to-content section{
+    margin-bottom: 60px;
+}
+@media only screen and (max-width:900px) {
+    .helper-image-container2 {
+        width: 80%;
+    }
+    .helper-image-container {
+        width: 50%;
+    }
+}
+@media only screen and (max-width:660px) {
+    .helper-image-container {
+        width: 50%;
+    }
+/*
+Mobile view
+*/
+.list-container-area {
+    padding: 20px;
+  }
+}
+@media only screen and (max-width:450px) {
+/*
+Mobile view
+*/
+}
+@media only screen and (max-width:290px){
+}
+@media only screen and (max-width:250px) {
+/*
+Mobile view
+*/
+}
