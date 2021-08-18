@@ -16,7 +16,7 @@ body{
     background-color: #23103A;
     width: 100%;
     display: block;
-    height: 12%;
+    height: 80px;
     margin-bottom: 20px;
     padding-top: 20px;
 }
@@ -119,6 +119,9 @@ body{
     }
     #devName {
       display: none;
+    }
+    #header {
+      height: 60px;
     }
   }
   @media only screen and (max-width:250px) {

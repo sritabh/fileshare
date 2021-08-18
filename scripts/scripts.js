@@ -75,5 +75,5 @@ function closePop(){
     const status = document.getElementById("popupStatus");
     popup.style.display = "none";
     status.style.display = "none";
-    localStorage.setItem("FileShare_joiningStatus", "Not Joined");
+    //localStorage.setItem("FileShare_joiningStatus", "Not Joined");
 }
