@@ -9,7 +9,7 @@ Files are shared over http on local network or _hotspot_ using ServerSocket conn
 >Read more about [receiving modes](https://sritabh.github.io/fileshare/help/how-to-use/#online-offline-mode)
 >Currently available for Android platform.
 ## How to use
-### [Download App Here](https://sobydamn.github.io/fileshare/help/how-to-use/)
+### [Download App Here](https://sritabh.github.io/fileshare/help/how-to-use/)
 >Having trouble check the [help page.](http://sritabh.github.io/fileshare/help.html)
 
 You can read more about the app [here](https://sritabh.github.io/fileshare/).
